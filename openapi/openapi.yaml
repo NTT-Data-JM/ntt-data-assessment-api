@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: NTT Data Assessment API
+  version: 1.0.0
+  description: Catalog, quiz, and history over SQLite assessment DB.
+paths:
+  /api/v1/profiles/active:
+    get: { tags: [Profile], operationId: activeProfile, responses: { "200": { description: Active profile } } }
+  /api/v1/baseline:
+    get: { tags: [Profile], operationId: baseline, responses: { "200": { description: Baseline bundle } } }
+  /api/v1/categories:
+    get: { tags: [Catalog], operationId: categories, responses: { "200": { description: Categories } } }
+  /api/v1/topics:
+    get: { tags: [Catalog], operationId: topics, responses: { "200": { description: Topics } } }
+  /api/v1/topics/{topicId}:
+    get:
+      tags: [Catalog]
+      operationId: topic
+      parameters: [{ name: topicId, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: Topic } }
+  /api/v1/questions:
+    get: { tags: [Catalog], operationId: questions, responses: { "200": { description: Questions } } }
+  /api/v1/questions/{questionId}:
+    get:
+      tags: [Catalog]
+      operationId: question
+      parameters: [{ name: questionId, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: Question } }
+  /api/v1/dashboard/readiness:
+    get: { tags: [Catalog], operationId: readiness, responses: { "200": { description: Readiness } } }
+  /api/v1/quizzes/preview:
+    post: { tags: [Quiz], operationId: preview, responses: { "200": { description: Preview } } }
+  /api/v1/quizzes/attempts:
+    post: { tags: [Quiz], operationId: createAttempt, responses: { "201": { description: Created } } }
+  /api/v1/quizzes/attempts/{attemptId}:
+    get:
+      tags: [Quiz]
+      operationId: getAttempt
+      parameters: [{ name: attemptId, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: Attempt } }
+  /api/v1/quizzes/attempts/{attemptId}/answers/{questionId}:
+    put:
+      tags: [Quiz]
+      operationId: saveAnswer
+      parameters:
+        - { name: attemptId, in: path, required: true, schema: { type: string } }
+        - { name: questionId, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: Updated } }
+  /api/v1/quizzes/attempts/{attemptId}/submit:
+    post:
+      tags: [Quiz]
+      operationId: submitAttempt
+      parameters: [{ name: attemptId, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: Completed } }
+  /api/v1/history/attempts:
+    get: { tags: [History], operationId: listAttempts, responses: { "200": { description: History } } }
+  /api/v1/history/attempts/{attemptId}:
+    get:
+      tags: [History]
+      operationId: historyAttempt
+      parameters: [{ name: attemptId, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: Attempt detail } }

@@ -1,0 +1,23 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: ntt-data-assessment-api
+
+assessment:
+  db:
+    # Relative to the module working directory (backend/ntt-data-assessment-api)
+    path: ../../database/sqlite/ntt-data-assessment-db.sqlite
+  ollama:
+    enabled: true
+    base-url: http://localhost:8092
+    grade-path: /api/v1/grades/text
+    connect-timeout: 2s
+    response-timeout: 60s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
